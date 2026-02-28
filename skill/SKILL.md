@@ -131,15 +131,15 @@ This appends/updates entries in `references/preferences.md`.
 Keep the final recommendation **concise**, a table + 1-2 line recommendation. Example:
 
 ```
-Top picks for momos near Koramangala:
+Top picks for ramen near Shibuya:
 
-| # | Restaurant      | App  | Google (reviews) | Time  | Price/2 |
-|---|----------------|------|-----------------|-------|---------|
-| 1 | Khawa Karpo    | 4.5  | 4.4 (890)       | 25min | ₹350    |
-| 2 | Momo I Am      | 4.3  | 4.2 (1.2k)      | 35min | ₹300    |
-| 3 | WowMomos       | 4.1  | 3.9 (2.5k)      | 20min | ₹250    |
+| # | Restaurant      | App  | Google (reviews) | Time  | Price/2  |
+|---|----------------|------|-----------------|-------|----------|
+| 1 | Fuunji         | 4.6  | 4.5 (2.1k)      | 20min | ¥1,800   |
+| 2 | Afuri          | 4.4  | 4.3 (1.8k)      | 25min | ¥1,600   |
+| 3 | Ichiran        | 4.3  | 4.1 (3.2k)      | 15min | ¥1,400   |
 
-Top pick: Khawa Karpo, highest combined rating, reasonable delivery time.
+Top pick: Fuunji, highest combined rating, reasonable delivery time.
 ```
 
 If sending via messaging (cfo.sh), strip markdown formatting and use plain text.

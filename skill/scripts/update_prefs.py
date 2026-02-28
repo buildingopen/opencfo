@@ -4,8 +4,8 @@ Update food preferences after a search session.
 Appends/updates entries in references/preferences.md.
 
 Usage:
-    python3 update_prefs.py --cuisine "Tibetan" --location "Koramangala" \\
-        --chosen "Khawa Karpo" --party-size 2 --budget "300-400"
+    python3 update_prefs.py --cuisine "Japanese" --location "Shibuya" \\
+        --chosen "Ichiran Ramen" --party-size 2 --budget "1500-2000"
 """
 
 import argparse
@@ -129,7 +129,7 @@ def main():
 
     if args.chosen and args.cuisine:
         content = update_order_history(content, args.chosen, args.cuisine)
-        location = args.location or "Bangalore"
+        location = args.location or "unknown"
         content = update_favorites(content, args.chosen, location, args.cuisine)
 
     write_prefs(content)

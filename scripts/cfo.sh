@@ -2,7 +2,7 @@
 # cfo -- Chief Food Officer
 # Searches delivery apps + Google Maps via Claude Code, outputs recommendation
 #
-# Usage: ./cfo.sh "momos near koramangala for 3"
+# Usage: ./cfo.sh "ramen near shibuya for 2"
 #
 # Prerequisites:
 # - Claude Code CLI installed (`claude`)
@@ -10,7 +10,7 @@
 
 set -euo pipefail
 
-QUERY="${*:-momos near koramangala}"
+QUERY="${*:-pizza near me}"
 PHONE="${CFO_PHONE:-}"  # Set your phone number in env for messaging relay
 LOG="${CFO_LOG:-/tmp/cfo.log}"
 
