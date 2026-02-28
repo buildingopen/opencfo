@@ -29,8 +29,10 @@ echo "[$(date -Is)] Result: ${RESULT:0:200}..." >> "$LOG"
 # Print result to stdout
 echo "$RESULT"
 
-# Optional: Send to messaging if phone and bot are configured
-if [ -n "$PHONE" ] && command -v clawdbot-ctl &>/dev/null; then
-    clawdbot-ctl send --target "$PHONE" --message "$RESULT" 2>>"$LOG"
+# Optional: Send to messaging via custom send command
+# Set CFO_SEND_CMD to your messaging tool, e.g. "wa-send" or "telegram-send"
+SEND_CMD="${CFO_SEND_CMD:-}"
+if [ -n "$PHONE" ] && [ -n "$SEND_CMD" ] && command -v "$SEND_CMD" &>/dev/null; then
+    "$SEND_CMD" --target "$PHONE" --message "$RESULT" 2>>"$LOG"
     echo "[$(date -Is)] Sent to: $PHONE" >> "$LOG"
 fi
