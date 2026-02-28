@@ -44,9 +44,11 @@ $ cfo momos near koramangala
 ## Installation
 
 ```bash
-git clone https://github.com/buildingopen/opencfo.git
+# 1. Add Playwright MCP to Claude Code (browser automation)
+claude mcp add playwright -- npx @playwright/mcp@latest
 
-# Copy the skill to your Claude Code skills directory
+# 2. Clone and install the skill
+git clone https://github.com/buildingopen/opencfo.git
 cp -r opencfo/skill ~/.claude/skills/cfo
 ```
 
