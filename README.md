@@ -5,8 +5,12 @@
 Built as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. It browses delivery platforms with a real browser, cross-references Google Maps ratings, learns your preferences, and makes the call.
 
 <p align="center">
-  <img src="demo.gif" alt="cfo demo" width="540">
+  <a href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7433419046131466240/">
+    <img src="demo.gif" alt="cfo demo" width="540">
+  </a>
 </p>
+
+[![LinkedIn](https://img.shields.io/badge/See_it_in_action-LinkedIn-0A66C2)](https://www.linkedin.com/feed/update/urn:li:ugcPost:7433419046131466240/)
 
 ## What it does
 
