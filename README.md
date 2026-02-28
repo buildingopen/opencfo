@@ -17,8 +17,10 @@ Built as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. 
 
 ### Example output
 
+Inside Claude Code:
+
 ```
-$ cfo momos near koramangala
+> find me momos near koramangala
 
   #  Restaurant        Swiggy  Google      Time   Price
   -  ----------------  ------  ---------  -----  ------
@@ -37,14 +39,14 @@ $ cfo momos near koramangala
 
 ## Prerequisites
 
+- [Node.js](https://nodejs.org/) (for Playwright MCP)
+- [Python 3](https://python.org/) (for preference tracking)
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
-- [Playwright MCP](https://github.com/anthropics/anthropic-mcp-playwright) configured -- the agent controls a real browser to navigate delivery apps and Google Maps
-- Works on Mac, Linux, or any machine with Chrome/Chromium
 
 ## Installation
 
 ```bash
-# 1. Add Playwright MCP to Claude Code (browser automation)
+# 1. Add Playwright MCP to Claude Code (launches a local headless browser)
 claude mcp add playwright -- npx @playwright/mcp@latest
 
 # 2. Clone and install the skill
@@ -54,27 +56,40 @@ cp -r opencfo/skill ~/.claude/skills/cfo
 
 Claude Code auto-discovers skills in `~/.claude/skills/`.
 
-## Usage
+## Quick start
 
-Just ask naturally:
+Open Claude Code and type:
 
 ```
-> momos near koramangala
-> pizza delivery in indiranagar, budget ₹300
-> healthy lunch near hsr layout
+> find me pizza near me
+```
+
+That's it. The agent opens a browser, searches your delivery app, checks Google Maps, and returns a ranked table.
+
+The default delivery platform is Swiggy (India). To use a different platform, see [Switching platforms](#switching-platforms).
+
+## Usage
+
+Ask naturally inside Claude Code:
+
+```
+> find me ramen near shibuya
+> pizza delivery in brooklyn, budget $20
+> best tacos near kreuzberg for 4 people
+> healthy lunch options near me
 > what should I eat for dinner?
 ```
 
 Or use the slash command:
 
 ```
-> /cfo biryani near koramangala for 3 people
+> /cfo pad thai near soho
 ```
 
 ## How it works
 
 ```
-User: "momos near koramangala"
+You: "find me ramen near shibuya"
   |
   |-- 1. Parse request (dish, location, budget, party size)
   |
@@ -101,19 +116,19 @@ After each search, the skill updates `references/preferences.md`:
 
 ```markdown
 ## Cuisine Preferences
-- Tibetan/Momos (high preference, last ordered 2026-02-27)
-- Biryani (ordered 2026-02-25)
+- Ramen/Japanese (high preference, last ordered 2026-02-27)
+- Pizza (ordered 2026-02-25)
 
 ## Rating Threshold
 - Prefers 4.3+ on delivery app, 4.3+ on Google Maps
 
 ## Favorites
-- Khawa Karpo (Koramangala) - Tibetan, momos
+- Cocolo Ramen (Kreuzberg) - Japanese, ramen
 
 ## Order History
 | Date       | Restaurant    | Cuisine | Rating | Notes         |
 |------------|--------------|---------|--------|---------------|
-| 2026-02-27 | Khawa Karpo  | Momos   | 4.4    | Great flavor  |
+| 2026-02-27 | Cocolo Ramen | Ramen   | 4.6    | Rich tonkotsu |
 ```
 
 This builds up over time and influences future recommendations.
@@ -131,7 +146,9 @@ The skill uses browser automation, so it works with any delivery platform that h
 | DoorDash | US, CA, AU | Supported |
 | Deliveroo | UK, EU | Supported |
 
-To switch platforms, edit `skill/SKILL.md` and update the navigation steps for your platform's UI. The Google Maps cross-referencing works globally.
+### Switching platforms
+
+The default is Swiggy. To switch, edit `~/.claude/skills/cfo/SKILL.md` and update **Step 3** with your platform's URL and navigation steps. For example, change `https://www.swiggy.com` to `https://wolt.com` or `https://www.ubereats.com`. The rest of the workflow (Google Maps cross-referencing, scoring, preferences) works the same regardless of platform.
 
 ## Project structure
 
@@ -144,13 +161,13 @@ opencfo/
 |   +-- scripts/
 |       +-- update_prefs.py       # Updates preferences after each search
 |-- scripts/
-|   +-- cfo.sh                    # CLI wrapper / WhatsApp relay (optional)
+|   +-- cfo.sh                    # CLI wrapper (optional)
 +-- README.md
 ```
 
 ## Limitations
 
-- **Browser required** - needs Playwright MCP with a real browser
+- **Browser required** - needs Playwright MCP with a real browser (runs headless locally)
 - **Not real-time pricing** - prices shown are listed prices, not final cart price with taxes/delivery
 - **Some platforms block bots** - works best with platforms that don't require login for browsing
 
