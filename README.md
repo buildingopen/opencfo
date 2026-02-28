@@ -1,11 +1,11 @@
-# Food Finder
+# cfo
 
-**An AI agent that searches delivery apps + Google Maps and recommends the best restaurants from your terminal.**
+**Your Chief Food Officer. An AI agent that searches delivery apps + Google Maps and picks the best restaurant for you.**
 
-Built as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. It browses delivery platforms with a real browser, cross-references Google Maps ratings, learns your preferences, and picks the best option for you.
+Built as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. It browses delivery platforms with a real browser, cross-references Google Maps ratings, learns your preferences, and makes the call.
 
 <p align="center">
-  <img src="demo.gif" alt="Food Finder demo" width="540">
+  <img src="demo.gif" alt="cfo demo" width="540">
 </p>
 
 ## What it does
@@ -13,44 +13,41 @@ Built as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. 
 1. **Searches delivery apps** - navigates the real website via browser automation, sets your delivery location, searches for your dish/cuisine, collects the top restaurants with ratings, delivery times, and prices
 2. **Cross-references Google Maps** - for the top results, checks Google Maps ratings and review counts
 3. **Ranks and recommends** - combines both ratings into a weighted score, presents a clean comparison table
-4. **Learns your taste** - saves your cuisine preferences, rating thresholds, budget range, and favorites to a local file that improves recommendations over time
+4. **Learns your taste** - saves cuisine preferences, rating thresholds, budget range, and favorites to a local file that improves recommendations over time
 
 ### Example output
 
 ```
-$ find me ramen near kreuzberg
+$ cfo momos near koramangala
 
-  #  Restaurant           Wolt  Google      Time  Price
-  -  -------------------  ----  ---------  -----  -----
-  1  Cocolo Ramen         4.5   4.6 (3.2k)  25m   €13
-  2  Hako Ramen           4.4   4.5 (890)   30m   €12
-  3  Takumi Nine          4.3   4.4 (1.5k)  35m   €14
+  #  Restaurant        Swiggy  Google      Time   Price
+  -  ----------------  ------  ---------  -----  ------
+  1  Khawa Karpo        4.5    4.4 (890)   25m    ₹350
+  2  Momo I Am          4.3    4.2 (1.2k)  35m    ₹300
+  3  WowMomos           4.1    3.9 (2.5k)  20m    ₹250
 
-  TOP PICK   Cocolo Ramen
-  Rich tonkotsu, generous portions. Known favorite.
+  TOP PICK   Khawa Karpo
+  Highest combined rating, reasonable delivery time.
 
-  BUDGET     Hako Ramen
-  €12 for full bowl with extras. Great value.
+  BUDGET     WowMomos
+  Fastest delivery, ₹250 for two.
 
-  HEALTH     Takumi Nine
-  Lighter shoyu option. Lists calories (480kcal).
-
-  [+] Preferences updated · Cocolo Ramen boosted
+  [+] Preferences updated
 ```
 
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
-- [Playwright MCP](https://github.com/anthropics/anthropic-mcp-playwright) configured - the agent controls a real browser to navigate delivery apps and Google Maps
+- [Playwright MCP](https://github.com/anthropics/anthropic-mcp-playwright) configured -- the agent controls a real browser to navigate delivery apps and Google Maps
 - Works on Mac, Linux, or any machine with Chrome/Chromium
 
 ## Installation
 
 ```bash
-git clone https://github.com/federicodeponte/food-finder.git
+git clone https://github.com/federicodeponte/opencfo.git
 
 # Copy the skill to your Claude Code skills directory
-cp -r food-finder/skill ~/.claude/skills/food-finder
+cp -r opencfo/skill ~/.claude/skills/cfo
 ```
 
 Claude Code auto-discovers skills in `~/.claude/skills/`.
@@ -60,22 +57,22 @@ Claude Code auto-discovers skills in `~/.claude/skills/`.
 Just ask naturally:
 
 ```
-> find me ramen near kreuzberg
-> pizza delivery in mitte, budget €15
-> healthy lunch options near friedrichshain
-> what should I eat for dinner? im near alexanderplatz
+> momos near koramangala
+> pizza delivery in indiranagar, budget ₹300
+> healthy lunch near hsr layout
+> what should I eat for dinner?
 ```
 
 Or use the slash command:
 
 ```
-> /food-finder tacos near williamsburg for 2 people
+> /cfo biryani near koramangala for 3 people
 ```
 
 ## How it works
 
 ```
-User: "find me ramen near kreuzberg"
+User: "momos near koramangala"
   |
   |-- 1. Parse request (dish, location, budget, party size)
   |
@@ -102,19 +99,19 @@ After each search, the skill updates `references/preferences.md`:
 
 ```markdown
 ## Cuisine Preferences
-- Ramen/Japanese (high preference, last ordered 2026-02-27)
-- Pizza (ordered 2026-02-25)
+- Tibetan/Momos (high preference, last ordered 2026-02-27)
+- Biryani (ordered 2026-02-25)
 
 ## Rating Threshold
 - Prefers 4.3+ on delivery app, 4.3+ on Google Maps
 
 ## Favorites
-- Cocolo Ramen (Kreuzberg) - Japanese, ramen
+- Khawa Karpo (Koramangala) - Tibetan, momos
 
 ## Order History
-| Date       | Restaurant   | Cuisine | Rating | Notes              |
-|------------|-------------|---------|--------|--------------------|
-| 2026-02-27 | Cocolo Ramen | Ramen   | 4.6    | Rich tonkotsu      |
+| Date       | Restaurant    | Cuisine | Rating | Notes         |
+|------------|--------------|---------|--------|---------------|
+| 2026-02-27 | Khawa Karpo  | Momos   | 4.4    | Great flavor  |
 ```
 
 This builds up over time and influences future recommendations.
@@ -125,27 +122,27 @@ The skill uses browser automation, so it works with any delivery platform that h
 
 | Platform | Region | Status |
 |----------|--------|--------|
-| Wolt | EU, Japan, Israel | Tested |
 | Swiggy | India | Tested |
+| Wolt | EU, Japan, Israel | Tested |
 | UberEats | Global | Supported |
 | Lieferando | Germany, NL | Supported |
 | DoorDash | US, CA, AU | Supported |
 | Deliveroo | UK, EU | Supported |
 
-To switch platforms, edit `skill/SKILL.md` and update the navigation steps to match your platform's UI. The Google Maps cross-referencing works globally.
+To switch platforms, edit `skill/SKILL.md` and update the navigation steps for your platform's UI. The Google Maps cross-referencing works globally.
 
 ## Project structure
 
 ```
-food-finder/
-|-- skill/                        # Claude Code skill (copy to ~/.claude/skills/)
+opencfo/
+|-- skill/                        # Claude Code skill (copy to ~/.claude/skills/cfo)
 |   |-- SKILL.md                  # Core instructions + browser workflow
 |   |-- references/
 |   |   +-- preferences.md        # Auto-learned food preferences
 |   +-- scripts/
 |       +-- update_prefs.py       # Updates preferences after each search
 |-- scripts/
-|   +-- food-finder.sh            # WhatsApp relay script (optional)
+|   +-- cfo.sh                    # CLI wrapper / WhatsApp relay (optional)
 +-- README.md
 ```
 
@@ -158,13 +155,13 @@ food-finder/
 ## Why I built this
 
 Every evening, the same ritual:
-1. Open the delivery app, scroll through 50 restaurants
+1. Open the delivery app, scroll through 200 restaurants
 2. Open Google Maps to check if the ratings are real
 3. Compare delivery times, prices, portions
 4. 20 minutes later, still undecided
 5. Order from the same place as yesterday
 
-Now it takes 2 minutes and I get a better recommendation than I'd find manually.
+Now: one command, better recommendation than I'd find manually.
 
 ## License
 

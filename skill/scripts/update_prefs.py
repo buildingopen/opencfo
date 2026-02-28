@@ -4,8 +4,8 @@ Update food preferences after a search session.
 Appends/updates entries in references/preferences.md.
 
 Usage:
-    python3 update_prefs.py --cuisine "Tibetan" --location "Koramangala" \
-        --chosen "Khawa Karpo" --party-size 2 --budget "₹300-400"
+    python3 update_prefs.py --cuisine "Tibetan" --location "Koramangala" \\
+        --chosen "Khawa Karpo" --party-size 2 --budget "300-400"
 """
 
 import argparse
@@ -14,7 +14,7 @@ import re
 from datetime import date
 
 PREFS_PATH = os.path.expanduser(
-    "~/.claude/skills/food-finder/references/preferences.md"
+    "~/.claude/skills/cfo/references/preferences.md"
 )
 
 

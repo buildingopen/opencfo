@@ -1,19 +1,19 @@
 # Food Preferences (Auto-learned)
 
 ## Locations
-- Koramangala, Bangalore (primary)
+- (auto-populated after your first search)
 
 ## Cuisine Preferences
 - (auto-populated after your first search)
 
 ## Rating Threshold
-- Prefers 4.4+ on Swiggy, 4.3+ on Google Maps
+- Prefers 4.3+ on delivery app, 4.3+ on Google Maps
 
 ## Party Size
 - Usually 2 people
 
 ## Budget
-- Comfortable with ₹150-400 per person
+- (set after your first search)
 
 ## Dietary
 - No strict restrictions
