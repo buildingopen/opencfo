@@ -44,7 +44,7 @@ $ cfo momos near koramangala
 ## Installation
 
 ```bash
-git clone https://github.com/federicodeponte/opencfo.git
+git clone https://github.com/buildingopen/opencfo.git
 
 # Copy the skill to your Claude Code skills directory
 cp -r opencfo/skill ~/.claude/skills/cfo
